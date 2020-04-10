@@ -10,6 +10,7 @@ const usersRouter = require('./routes/users');
 const app = express();
 //Set up mongoose connection
 const mongoose = require('mongoose');
+const Promise = global.Promise;
 const mongoDB = 'mongodb+srv://poojagundu:<Pooja31095$>@cluster0-yaqki.mongodb.net/local_library?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, { useNewUrlParser: true ,useUnifiedTopology:true});
 const db = mongoose.connection;
