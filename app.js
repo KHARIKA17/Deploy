@@ -13,7 +13,7 @@ const app = express();
 dotenv.config({ path: '.env'})
 //Set up mongoose connection
 const mongoose = require('mongoose');
-const mongoDB = process.env.MONGO_CONN
+const dev_db_url = process.env.ATLAS_URI;
 const Promise = global.Promise;
 const mongoDB = 'mongodb+srv://gundupooja1995@gmail.com:<Pooja31095@>@cluster0-yaqki.mongodb.net/local_library?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, { useNewUrlParser: true ,useUnifiedTopology:true});
