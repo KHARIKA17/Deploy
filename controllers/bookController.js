@@ -1,7 +1,7 @@
 let Book = require('../models/book');
 
 exports.index = function(req, res) {
-    res.send('NOT IMPLEMENTED: Site Home Page');
+    res.send('GUNDUPOOJA: CONTROLLERS ASSIGNMENT');
 };
 
 // Display list of all books.
