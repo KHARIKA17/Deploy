@@ -3,12 +3,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const  dotenv = require('dotenv')
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 
 const app = express();
+dotenv.config({ path: '.env'})
 //Set up mongoose connection
 const mongoose = require('mongoose');
 const Promise = global.Promise;
