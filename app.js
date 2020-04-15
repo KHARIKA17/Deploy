@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const  dotenv = require('dotenv')
+// const  dotenv = require('dotenv')
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
@@ -13,10 +13,10 @@ const app = express();
 dotenv.config({ path: '.env'})
 //Set up mongoose connection
 const mongoose = require('mongoose');
-const dev_db_url = process.env.ATLAS_URI;
-const Promise = global.Promise;
-const mongoDB = 'mongodb+srv://gundupooja1995@gmail.com:<Pooja31095@>@cluster0-yaqki.mongodb.net/local_library?retryWrites=true&w=majority';
+const dev_db_url =' mongodb+srv://gundupooja1995@gmail.com:<Pooja31095@>@cluster0-yaqki.mongodb.net/local_library?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGODB_URI || dev-dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true ,useUnifiedTopology:true});
+mongoose.promise = global.promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 

@@ -1,7 +1,7 @@
 let Book = require('../models/book');
 
 exports.index = function(req, res) {
-    res.send('GUNDUPOOJA: CONTROLLERS ASSIGNMENT');
+    res.send('NOT IMPLEMENTED: CONTROLLERS ASSIGNMENT');
 };
 
 // Display list of all books.
