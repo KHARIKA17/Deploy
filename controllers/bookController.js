@@ -1,7 +1,7 @@
 var Book = require('../models/book');
 
 exports.index = function(req, res) {
-    res.send('NOT IMPLEMENTED: WEB APPS');
+    res.send(' WEB Applications');
 };
 
 // Display list of all books.
