@@ -14,8 +14,8 @@ dotenv.config({ path: '.env'})
 //Set up mongoose connection
 const mongoose = require('mongoose');
 const dev_db_url =' mongodb+srv://gundupooja1995@gmail.com:<Pooja31095@>@cluster0-yaqki.mongodb.net/local_library?retryWrites=true&w=majority';
-const mongoDB = process.env.MONGODB_URI || dev-dev_db_url;
-mongoose.connect(mongoDB, { useNewUrlParser: true ,useUnifiedTopology:true});
+const mongoDB = process.env.ATLAS_URI || dev_db_url;
+mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.promise = global.promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -29,6 +29,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(helmet());	
+app.use(compression()); // Compress all routes	
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
