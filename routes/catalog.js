@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-// Require our controllers.
+// Require controller modules.
 var book_controller = require('../controllers/bookController');
 var author_controller = require('../controllers/authorController');
 var genre_controller = require('../controllers/genreController');
@@ -19,19 +19,19 @@ router.get('/book/create', book_controller.book_create_get);
 router.post('/book/create', book_controller.book_create_post);
 
 // GET request to delete Book.
-router.get('/book/5e8e35f51c9d440000c02be5/delete', book_controller.book_delete_get);
+router.get('/book/:id/delete', book_controller.book_delete_get);
 
 // POST request to delete Book.
-router.post('/book/5e8e35f51c9d440000c02be5/delete', book_controller.book_delete_post);
+router.post('/book/:id/delete', book_controller.book_delete_post);
 
 // GET request to update Book.
-router.get('/book/5e8e35f51c9d440000c02be5/update', book_controller.book_update_get);
+router.get('/book/:id/update', book_controller.book_update_get);
 
 // POST request to update Book.
-router.post('/book/5e8e35f51c9d440000c02be5/update', book_controller.book_update_post);
+router.post('/book/:id/update', book_controller.book_update_post);
 
 // GET request for one Book.
-router.get('/book/5e8e35f51c9d440000c02be5', book_controller.book_detail);
+router.get('/book/:id', book_controller.book_detail);
 
 // GET request for list of all Book items.
 router.get('/books', book_controller.book_list);
@@ -45,19 +45,19 @@ router.get('/author/create', author_controller.author_create_get);
 router.post('/author/create', author_controller.author_create_post);
 
 // GET request to delete Author.
-router.get('/author/5e8e351e1c9d440000c02be4/delete', author_controller.author_delete_get);
+router.get('/author/:id/delete', author_controller.author_delete_get);
 
 // POST request to delete Author.
-router.post('/author/5e8e351e1c9d440000c02be4/delete', author_controller.author_delete_post);
+router.post('/author/:id/delete', author_controller.author_delete_post);
 
 // GET request to update Author.
-router.get('/author/5e8e351e1c9d440000c02be4/update', author_controller.author_update_get);
+router.get('/author/:id/update', author_controller.author_update_get);
 
 // POST request to update Author.
-router.post('/author/5e8e351e1c9d440000c02be4/update', author_controller.author_update_post);
+router.post('/author/:id/update', author_controller.author_update_post);
 
 // GET request for one Author.
-router.get('/author/5e8e351e1c9d440000c02be4', author_controller.author_detail);
+router.get('/author/:id', author_controller.author_detail);
 
 // GET request for list of all Authors.
 router.get('/authors', author_controller.author_list);
@@ -71,19 +71,19 @@ router.get('/genre/create', genre_controller.genre_create_get);
 router.post('/genre/create', genre_controller.genre_create_post);
 
 // GET request to delete Genre.
-router.get('/genre/5e8e37471c9d440000535bc9/delete', genre_controller.genre_delete_get);
+router.get('/genre/:id/delete', genre_controller.genre_delete_get);
 
 // POST request to delete Genre.
-router.post('/genre/5e8e37471c9d440000535bc9/delete', genre_controller.genre_delete_post);
+router.post('/genre/:id/delete', genre_controller.genre_delete_post);
 
 // GET request to update Genre.
-router.get('/genre/5e8e37471c9d440000535bc9/update', genre_controller.genre_update_get);
+router.get('/genre/:id/update', genre_controller.genre_update_get);
 
 // POST request to update Genre.
-router.post('/genre/5e8e37471c9d440000535bc9/update', genre_controller.genre_update_post);
+router.post('/genre/:id/update', genre_controller.genre_update_post);
 
 // GET request for one Genre.
-router.get('/genre/5e8e37471c9d440000535bc9/update', genre_controller.genre_detail);
+router.get('/genre/:id', genre_controller.genre_detail);
 
 // GET request for list of all Genre.
 router.get('/genres', genre_controller.genre_list);
@@ -97,19 +97,19 @@ router.get('/bookinstance/create', book_instance_controller.bookinstance_create_
 router.post('/bookinstance/create', book_instance_controller.bookinstance_create_post);
 
 // GET request to delete BookInstance.
-router.get('/bookinstance/5e8e36af1c9d440000c02be6/delete', book_instance_controller.bookinstance_delete_get);
+router.get('/bookinstance/:id/delete', book_instance_controller.bookinstance_delete_get);
 
 // POST request to delete BookInstance.
-router.post('/bookinstance/5e8e36af1c9d440000c02be6/delete', book_instance_controller.bookinstance_delete_post);
+router.post('/bookinstance/:id/delete', book_instance_controller.bookinstance_delete_post);
 
 // GET request to update BookInstance.
-router.get('/bookinstance/5e8e36af1c9d440000c02be6/update', book_instance_controller.bookinstance_update_get);
+router.get('/bookinstance/:id/update', book_instance_controller.bookinstance_update_get);
 
 // POST request to update BookInstance.
-router.post('/bookinstance/5e8e36af1c9d440000c02be6/update', book_instance_controller.bookinstance_update_post);
+router.post('/bookinstance/:id/update', book_instance_controller.bookinstance_update_post);
 
 // GET request for one BookInstance.
-router.get('/bookinstance/5e8e36af1c9d440000c02be6', book_instance_controller.bookinstance_detail);
+router.get('/bookinstance/:id', book_instance_controller.bookinstance_detail);
 
 // GET request for list of all BookInstance.
 router.get('/bookinstances', book_instance_controller.bookinstance_list);
