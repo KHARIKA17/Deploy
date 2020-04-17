@@ -9,7 +9,7 @@ let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 
-const app = express();
+let app = express();
 dotenv.config({ path: '.env'})
 //Set up mongoose connection
 const mongoose = require('mongoose');
