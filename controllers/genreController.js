@@ -1,3 +1,4 @@
+const validator = require('express-validator');
 var Genre = require('../models/genre');
 
 // Display list of all Genre.
