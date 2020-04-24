@@ -2,73 +2,70 @@ const Book = require('../models/book');
 const Author = require('../models/author');
 const Genre = require('../models/genre');
 const BookInstance = require('../models/bookinstance');
-
-const { body,validationResult } = require('express-validator/check');
+const {body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
+const async = require('async');
 
-var async = require('async');
-
-exports.index = function(req, res) {
-
+exports.index = function(req, res) {   
+    
     async.parallel({
         book_count: function(callback) {
-            Book.count(callback);
+            Book.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
         },
         book_instance_count: function(callback) {
-            BookInstance.count(callback);
+            BookInstance.countDocuments({}, callback);
         },
         book_instance_available_count: function(callback) {
-            BookInstance.count({status:'Available'},callback);
+            BookInstance.countDocuments({status:'Available'}, callback);
         },
         author_count: function(callback) {
-            Author.count(callback);
+            Author.countDocuments({}, callback);
         },
         genre_count: function(callback) {
-            Genre.count(callback);
-        },
+            Genre.countDocuments({}, callback);
+        }
     }, function(err, results) {
         res.render('index', { title: 'Local Library Home', error: err, data: results });
     });
 };
-
-
 // Display list of all books.
 exports.book_list = function(req, res, next) {
 
-  Book.find({}, 'title author')
-    .populate('author').exec(function (err, list_books) {
+    Book.find({}, 'title author')
+      .populate('author')
+      .exec(function (err, list_books) {
+        if (err) { return next(err); }
+        //Successful, so render
+        res.render('book_list', { title: 'Book List', book_list: list_books });
+      });
       
-        if (err) { return next(err); }	
-        //Successful, so render	
-        res.render('book_list', { title: 'Book List', book_list: list_books });	
-      });	
-      	
   };
 
-  //Display detail page for a specific book.	
-  exports.book_detail = function(req, res) {	
-      res.send('NOT IMPLEMENTED: Book detail: ' + req.params.id);	
-
+// Display detail page for a specific book.
+exports.book_detail = function(req, res) {
+    res.send('NOT IMPLEMENTED: Book detail: ' + req.params.id);
 };
 
 // Display book create form on GET.
-exports.book_create_get = function(req, res, next) {
+    exports.book_create_get = function(req, res, next) { 
+      
+        // Get all authors and genres, which we can use for adding to our book.
+        async.parallel({
+            authors: function(callback) {
+                Author.find(callback);
+            },
+            genres: function(callback) {
+                Genre.find(callback);
+            },
+        }, function(err, results) {
+            if (err) { return next(err); }
+            res.render('book_form', { title: 'Create Book', authors: results.authors, genres: results.genres });
+        });
+        
+    };
 
-    // Get all authors and genres, which we can use for adding to our book.
-    async.parallel({
-        authors: function(callback) {
-            Author.find(callback);
-        },
-        genres: function(callback) {
-            Genre.find(callback);
-        },
-    }, function(err, results) {
-        if (err) { return next(err); }
-        res.render('book_form', { title: 'Create Book',authors:results.authors, genres:results.genres });
-    });
 
-};
-
+// Handle book create on POST.
 // Handle book create on POST.
 exports.book_create_post = [
     // Convert the genre to an array.
@@ -83,18 +80,17 @@ exports.book_create_post = [
     },
 
     // Validate fields.
-    body('title', 'Title must not be empty.').trim().isLength({ min: 1 }).trim(),
-    body('author', 'Author must not be empty.').trim().isLength({ min: 1 }).trim(),
-    body('summary', 'Summary must not be empty.').trim().isLength({ min: 1 }).trim(),
-    body('isbn', 'ISBN must not be empty').trim().isLength({ min: 1 }).trim(),
+       body('title', 'Title must not be empty.').trim().isLength({ min: 1 }),
+    body('author', 'Author must not be empty.').trim().isLength({ min: 1 }),
+    body('summary', 'Summary must not be empty.').trim().isLength({ min: 1 }),
+    body('isbn', 'ISBN must not be empty').trim().isLength({ min: 1 }),
   
-    // Sanitize fields.
-    sanitizeBody('*').escape(),
-    
+    // Sanitize fields (using wildcard).
+   sanitizeBody('*').escape(),
+
     // Process request after validation and sanitization.
     (req, res, next) => {
         
-
         // Extract the validation errors from a request.
         const errors = validationResult(req);
 
@@ -135,37 +131,29 @@ exports.book_create_post = [
             // Data from form is valid. Save book.
             book.save(function (err) {
                 if (err) { return next(err); }
-                   // Successful - redirect to new book record.
+                   //successful - redirect to new book record.
                    res.redirect(book.url);
                 });
         }
     }
 ];
 
-
-
 // Display book delete form on GET.
 exports.book_delete_get = function(req, res) {
-res.send('NOT IMPLEMENTED: Book delete GET');
+    res.send('NOT IMPLEMENTED: Book delete GET');
 };
+
 // Handle book delete on POST.
 exports.book_delete_post = function(req, res) {
     res.send('NOT IMPLEMENTED: Book delete POST');
-   
-        
 };
 
 // Display book update form on GET.
 exports.book_update_get = function(req, res) {
-
     res.send('NOT IMPLEMENTED: Book update GET');
 };
 
-
 // Handle book update on POST.
-exports.book_update_post = function(req, res) {	
-    res.send('NOT IMPLEMENTED: Book update POST');	
-};	
-
-
-   
+exports.book_update_post = function(req, res) {
+    res.send('NOT IMPLEMENTED: Book update POST');
+};
